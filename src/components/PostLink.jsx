@@ -3,16 +3,24 @@ import React, { useState } from "react";
 import { addPost, fetchPosts, fetchTags } from "../api/api";
 
 const PostList = () => {
-  const [title, setTitle] = useState(""); // Manage form input state
+  const [title, setTitle] = useState("");
   const queryClient = useQueryClient()
   const { data: postData, isLoading, isError, error } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+    gcTime:0,
+    staleTime:1000*5
+
+    // refetchInterval: 1000,
+    // refetchIntervalInBackground: true,
+    // staleTime: 60000,
+    // cacheTime: 120000
   });
 
   const {data:tagsData}=useQuery({
     queryKey:["tags"],
     queryFn: fetchTags,
+    staleTime:1000*5
   })
   console.log(tagsData)
 
